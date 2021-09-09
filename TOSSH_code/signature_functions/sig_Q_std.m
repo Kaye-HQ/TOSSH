@@ -1,4 +1,4 @@
-function [CoV, error_flag, error_str] = sig_Q_CoV(Q, t)
+function [Q_Std error_flag, error_str] = sig_Q_std(Q, t)
 %sig_Q_CoV calculates coefficient of variation (CoV) of flow.
 %   Calculates CoV, i.e. standard deviation normalised by mean.
 %
@@ -45,11 +45,11 @@ parse(ip, Q, t)
 % data checks
 [error_flag, error_str, timestep, t] = util_DataCheck(Q, t);
 if error_flag == 2
-    CoV = NaN;
+    Q_Std = NaN;
     return
 end
 
 % calculate signature
-CoV = std(Q,'omitnan')./mean(Q,'omitnan');
+Q_Std = std(Q,'omitnan');
 
 end

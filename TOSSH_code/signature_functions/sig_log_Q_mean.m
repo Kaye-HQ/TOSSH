@@ -1,13 +1,12 @@
-function [CoV, error_flag, error_str] = sig_Q_CoV(Q, t)
-%sig_Q_CoV calculates coefficient of variation (CoV) of flow.
-%   Calculates CoV, i.e. standard deviation normalised by mean.
+function [log_Q_mean, error_flag, error_str] = sig_log_Q_mean(Q, t)
+%sig_Q_mean calculates mean flow of time series.
 %
 %   INPUT
 %   Q: streamflow [mm/timestep]
 %   t: time [Matlab datetime]
 %
 %   OUTPUT
-%   CoV: coefficient of variation [-]
+%   Q_mean: mean flow [mm/timestep]
 %   error_flag: 0 (no error), 1 (warning), 2 (error in data check), 3
 %       (error in signature calculation)
 %   error_str: string contraining error description
@@ -17,10 +16,10 @@ function [CoV, error_flag, error_str] = sig_Q_CoV(Q, t)
 %   data = load('example/example_data/33029_daily.mat'); 
 %   Q = data.Q; 
 %   t = data.t;
-%   CoV = sig_Q_CoV(Q,t);
+%   Q_mean = sig_Q_mean(Q,t);
 %
 %   References
-%   https://en.wikipedia.org/wiki/Coefficient_of_variation
+%   https://en.wikipedia.org/wiki/Arithmetic_mean
 %
 %   Copyright (C) 2020
 %   This software is distributed under the GNU Public License Version 3.
@@ -45,11 +44,11 @@ parse(ip, Q, t)
 % data checks
 [error_flag, error_str, timestep, t] = util_DataCheck(Q, t);
 if error_flag == 2
-    CoV = NaN;
+    log_Q_mean = NaN;
     return
 end
 
 % calculate signature
-CoV = std(Q,'omitnan')./mean(Q,'omitnan');
-
+log_Q_mean = mean(log(Q),'omitnan'); 
+    
 end

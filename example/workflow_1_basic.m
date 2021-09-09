@@ -47,7 +47,7 @@ t = [datetime(1999,10,1,0,0,0):datetime(1999,10,10,0,0,0)]';
 % evapotranspiration (PET), and temperature (T) data, which are required 
 % for some signatures. The paths are relative and assume that we are in 
 % the TOSSH directory.
-path = './example/example_data/'; % specify path
+path = './example_data/'; % specify path
 data = load(strcat(path,'33029_daily.mat')); % load data
 t = data.t;
 Q = data.Q; % streamflow [mm/day]
